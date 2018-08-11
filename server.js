@@ -2,9 +2,12 @@
 const express = require('express');
 const session = require('express-session');
 const app = express();
+const morgan = require('morgan');
+
+// logging
+app.use(morgan('tiny'));
 
 // middleware
-app.use(express.static('public'));
 app.use(require('express-session')({
   secret: process.env.SECRET,
   resave: true,
@@ -12,8 +15,8 @@ app.use(require('express-session')({
 }));
 
 // routes ======================================================================
-app.use('/guest/s/default/', require('./src/routes/index.js')());
-app.use('/authorise', require('./src/routes/authorise.js')());
+app.use('/authorize', require('./src/routes/authorize')());
+app.use('/', require('./src/routes/landing')());
 
 // launch ======================================================================
 app.listen(process.env.PORT, function (err) {

@@ -1,5 +1,6 @@
 const express = require('express');
 const indexRouter = express.Router();
+const path = require('path');
 
 module.exports = function () {
     indexRouter.route('/')
@@ -10,7 +11,7 @@ module.exports = function () {
             req.session.url = req.query.url;
             req.session.ssid = req.query.ssid;
 
-            res.sendFile('index');
+            res.sendFile(path.join(__dirname, '../../public', 'index.html'));
         });
     return indexRouter;
 };
