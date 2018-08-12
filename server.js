@@ -8,17 +8,19 @@ const morgan = require('morgan');
 app.use(morgan('tiny'));
 
 // middleware
-app.use(require('express-session')({
-  secret: process.env.SECRET,
-  resave: true,
-  saveUninitialized: true
-}));
+app.use(
+  session({
+    secret: process.env.SECRET,
+    resave: true,
+    saveUninitialized: true,
+  })
+);
 
 // routes ======================================================================
 app.use('/authorize', require('./src/routes/authorize')());
 app.use('/', require('./src/routes/landing')());
 
 // launch ======================================================================
-app.listen(process.env.PORT, function (err) {
+app.listen(process.env.PORT, () => {
   console.log('running server on port ' + process.env.PORT);
 });
